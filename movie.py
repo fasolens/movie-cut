@@ -1,9 +1,10 @@
 from pymediainfo import MediaInfo
-
+import os
 
 class Movie:
     def __init__(self, path_to_file):
         self.path = path_to_file
+        self.filename = path_to_file.split(os.sep)[-1]
         self.media = MediaInfo.parse(self.path)
         self.video = self.get_video()
         self.frame_ratio = self.get_frame_ratio()

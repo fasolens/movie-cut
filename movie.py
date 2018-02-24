@@ -1,6 +1,7 @@
 from pymediainfo import MediaInfo
 import os
 
+
 class Movie:
     def __init__(self, path_to_file):
         self.path = path_to_file
@@ -25,5 +26,5 @@ class Movie:
 
 
 if __name__ == '__main__':
-    m = Movie('/home/fasolens/Videos/wędrówki_z_dinozaurami_2013.mp4')
+    m = Movie('test.ts')
     print(m.frame_ratio)

@@ -1,40 +1,47 @@
-"""1. Search for frame from th beginning of the movie. Skipping by 1 second (frame rate)
-2. If found one frame in limit
-    2.1. Back 100 frames back (or to the beginning) and search with more precise every 1 frame.
-    2.2. All found frames add to list and get the best match
-
-New algorithm
-Get list of files to analyse.
-Extract frames from movie.
-if frames_number = 0
-    Get number of frames -> current_frame_number
-if current_frame_number <> frames_number/+/-/(10% -
-Get two frames for opening
-    One frame is from movie, the next one is just before movie
-and two for closing
-    One frame is from movie, the next one is just after movie
-
-
-"""
 import os
+from movie import Movie
+from editor import Editor
 
-class Movie_cutter:
+
+class MovieCutter:
     def __init__(self, path):
         self.path = path
         self.video_files = []
-        self.opening_files = []
-        self.closing_files = []
+        self.opening_movie = None
+        self.opening = None
+        self.closing_movie = None
+        self.closing = None
 
     def run(self):
-        files_to_edit = self.get_files_to_edit()
-        for fn in files_to_edit:
-            self.edit(fn)
+        self.get_files_to_edit()
+        for fn in self.video_files:
+            video = Movie(os.path.join(self.path, fn))
+            Editor(video,
+                   self.opening_movie,
+                   self.opening,
+                   self.closing_movie,
+                   self.closing)
 
     def get_files_to_edit(self):
         self.video_files = os.listdir(self.path)
         self.video_files.sort()
-        self.opening_files = os.listdir(os.path.join(self.path, 'opening'))
-        self.opening_files.sort()
-        self.closing_files = os.listdir(os.path.join(self.path, 'closing'))
-        self.closing_files.sort()
-
+        opening_files = os.listdir(os.path.join(self.path, 'opening'))
+        opening_files.sort()
+        if len(opening_files) == 1:
+            self.opening = opening_files[0]
+        elif len(opening_files) == 2:
+            self.opening = opening_files[0]
+            self.opening_movie = opening_files[1]
+        else:
+            # TODO throw error
+            pass
+        closing_files = os.listdir(os.path.join(self.path, 'closing'))
+        closing_files.sort()
+        if len(closing_files) == 1:
+            self.closing = closing_files[0]
+        elif len(closing_files) == 2:
+            self.closing = closing_files[1]
+            self.closing_movie = closing_files[0]
+        else:
+            # TODO throw error
+            pass

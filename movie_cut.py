@@ -207,7 +207,7 @@ for fn in video_files:
         print(mov.filename)
         # clear_dir('tmp')
         print('EXTRACT FRAMES')
-        # extract_frames(mov.path)
+        extract_frames(mov.path)
         print('SEARCHING OPENING')
         seek_time = analyse_frames_opening(os.path.join('/',
                                                         'home',

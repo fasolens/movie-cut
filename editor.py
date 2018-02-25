@@ -26,3 +26,32 @@ class Editor:
         self.opening = opening
         self.closing_movie = closing_movie
         self.closing = closing
+        print("Editor")
+
+    def find_frame(self):
+        pass
+
+    def find_opening_frame(self):
+        self.find_frame()
+
+    def find_opening_movie_frame(self):
+        self.find_frame()
+
+    def find_opening(self):
+        if self.opening_movie:
+            self.find_opening_movie_frame()
+        self.find_opening_frame()
+
+    def find_closing_frame(self):
+        self.find_frame()
+
+    def find_closing_movie_frame(self):
+        self.find_frame()
+
+    def find_closing(self):
+        if self.closing_movie:
+            self.find_closing_movie_frame()
+        self.find_closing_frame()
+
+    def run(self):
+        self.find_opening()

@@ -7,9 +7,12 @@ class Movie:
         self.path = path_to_file
         self.filename = path_to_file.split(os.sep)[-1]
         self.media = MediaInfo.parse(self.path)
-        self.video = self.get_video()
-        self.frame_ratio = self.get_frame_ratio()
-        self.duration = self.get_duration()  # in secs
+        self.status = False
+        if len(self.media.tracks) > 1:
+            self.status = True
+            self.video = self.get_video()
+            self.frame_ratio = self.get_frame_ratio()
+            self.duration = self.get_duration()  # in secs
 
     def get_video(self):
         tracks = self.media.tracks

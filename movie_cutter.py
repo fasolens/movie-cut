@@ -14,8 +14,13 @@ class MovieCutter:
 
     def run(self):
         self.get_files_to_edit()
+
+        # filter out directories
+        self.video_files = [fn for fn in self.video_files if os.path.isfile(os.path.join(self.path, fn))]
         for fn in self.video_files:
             video = Movie(os.path.join(self.path, fn))
+            if not video.status:
+                continue
             Editor(video,
                    self.opening_movie,
                    self.opening,
@@ -45,3 +50,6 @@ class MovieCutter:
         else:
             # TODO throw error
             pass
+
+if __name__ == '__main__':
+    MovieCutter('test').run()

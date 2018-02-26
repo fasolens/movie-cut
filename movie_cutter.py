@@ -25,7 +25,7 @@ class MovieCutter:
                    self.opening_movie,
                    self.opening,
                    self.closing_movie,
-                   self.closing)
+                   self.closing).run()
 
     def get_files_to_edit(self):
         self.video_files = os.listdir(self.path)
@@ -33,23 +33,24 @@ class MovieCutter:
         opening_files = os.listdir(os.path.join(self.path, 'opening'))
         opening_files.sort()
         if len(opening_files) == 1:
-            self.opening = opening_files[0]
+            self.opening = os.path.join(self.path, 'opening', opening_files[0])
         elif len(opening_files) == 2:
-            self.opening = opening_files[0]
-            self.opening_movie = opening_files[1]
+            self.opening = os.path.join(self.path, 'opening', opening_files[0])
+            self.opening_movie = os.path.join(self.path, 'opening', opening_files[1])
         else:
             # TODO throw error
             pass
         closing_files = os.listdir(os.path.join(self.path, 'closing'))
         closing_files.sort()
         if len(closing_files) == 1:
-            self.closing = closing_files[0]
+            self.closing = os.path.join(self.path, 'closing', closing_files[0])
         elif len(closing_files) == 2:
-            self.closing = closing_files[1]
-            self.closing_movie = closing_files[0]
+            self.closing = os.path.join(self.path, 'closing', closing_files[1])
+            self.closing_movie = os.path.join(self.path, 'closing', closing_files[0])
         else:
             # TODO throw error
             pass
+
 
 if __name__ == '__main__':
     MovieCutter('test').run()

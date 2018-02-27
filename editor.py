@@ -71,14 +71,17 @@ class Editor:
                    frames,  # list of frames
                    sample_frame,  # path
                    opening_offset=0,  # int
-                   closing_offset=0):  # int
+                   closing_offset=0,
+                   frame_step=1,  # int
+                   compare_number=7500):  # float
         FOUND = False
         found_frames = []
 
-        for fn in frames:
+        for fn in frames[::frame_step]:
             file_to_compare = os.path.join('tmp', fn)
             compare_result = self.compare_images(sample_frame, file_to_compare)
-            print(compare_result)
+            if float(compare_result[0]) < compare_number:
+                FOUND = True
 
     def find_opening_frame(self,
                            frames,
@@ -95,8 +98,8 @@ class Editor:
     def find_opening(self,
                      frames,
                      opening_offset):
-        if self.opening_movie:
-            self.find_opening_movie_frame(frames)
+        # if self.opening_movie:
+        #     self.find_opening_movie_frame(frames)
         self.find_opening_frame(frames,
                                 opening_offset)
 
